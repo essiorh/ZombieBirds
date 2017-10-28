@@ -115,14 +115,36 @@ public class GameRenderer {
                     1, 1, bird.getRotation());
         }
 
+        // ВРЕМЕННЫЙ КОД! Изменим позже:
 
-        // Конвертирование integer в String
-        String score = world.getScore() + "";
-        // Отрисуем сначала тень
-        AssetLoader.shadow.draw(batcher, "" + world.getScore(), (136 / 2) - (3 * score.length()), 12);
-        // Отрисуем сам текст
-        AssetLoader.font.draw(batcher, "" + world.getScore(), (136 / 2) - (3 * score.length() - 1), 11);
+        if (world.isReady()) {
+            // Отрисуем сначала тень
+            AssetLoader.shadow.draw(batcher, "Touch me", (136 / 2)
+                    - (42), 76);
+            // Отрисуем сам текст
+            AssetLoader.font.draw(batcher, "Touch me", (136 / 2)
+                    - (42 - 1), 75);
+        } else {
 
+            if (world.isGameOver()) {
+                AssetLoader.shadow.draw(batcher, "Game Over", 25, 56);
+                AssetLoader.font.draw(batcher, "Game Over", 24, 55);
+
+                AssetLoader.shadow.draw(batcher, "Try again?", 23, 76);
+                AssetLoader.font.draw(batcher, "Try again?", 24, 75);
+
+
+
+            }
+
+            // Конвертирование integer в String
+            String score = world.getScore() + "";
+            // Отрисуем сначала тень
+            AssetLoader.shadow.draw(batcher, "" + world.getScore(), (136 / 2) - (3 * score.length()), 12);
+            // Отрисуем сам текст
+            AssetLoader.font.draw(batcher, "" + world.getScore(), (136 / 2) - (3 * score.length() - 1), 11);
+
+        }
         // Заканчиваем SpriteBatch
         batcher.end();
 

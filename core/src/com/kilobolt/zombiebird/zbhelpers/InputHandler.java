@@ -2,18 +2,30 @@ package com.kilobolt.zombiebird.zbhelpers;
 
 import com.badlogic.gdx.InputProcessor;
 import com.kilobolt.zombiebird.gameobjects.Bird;
+import com.kilobolt.zombiebird.gameworld.GameWorld;
 
 public class InputHandler implements InputProcessor {
 
+    private GameWorld world;
     private Bird bird;
 
-    public InputHandler(Bird bird) {
-        this.bird = bird;
+    public InputHandler(GameWorld world) {
+        this.bird = world.getBird();
+        this.world = world;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (world.isReady()) {
+            world.start();
+        }
+
         bird.onClick();
+
+        if (world.isGameOver()) {
+            // Обнулим все перменные, перейдем в GameState.READ
+            world.restart();
+        }
         return false;
     }
 

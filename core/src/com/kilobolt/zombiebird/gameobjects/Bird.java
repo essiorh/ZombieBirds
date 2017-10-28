@@ -35,6 +35,12 @@ public class Bird {
             velocity.y = 200;
         }
 
+        // проверяем потолок
+        if (position.y < 0) {
+            position.y = 0;
+            velocity.y = 0;
+        }
+
         position.add(velocity.cpy().scl(delta));
 
         // Выставите координаты круга следующими (9, 6) относительно птицы.
@@ -111,5 +117,15 @@ public class Bird {
 
     public Circle getBoundingCircle() {
         return boundingCircle;
+    }
+
+    public void onRestart(int y) {
+        rotation = 0;
+        position.y = y;
+        velocity.x = 0;
+        velocity.y = 0;
+        acceleration.x = 0;
+        acceleration.y = 460;
+        isAlive = true;
     }
 }
