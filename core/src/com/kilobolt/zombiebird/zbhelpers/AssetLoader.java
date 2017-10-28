@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class AssetLoader {
-    public static Texture texture;
-    public static TextureRegion bg, grass;
+    public static Texture texture, logoTexture;
+    public static TextureRegion logo, bg, grass;
 
     public static Animation birdAnimation;
     public static TextureRegion bird, birdDown, birdUp;
@@ -24,6 +24,12 @@ public class AssetLoader {
     public static Preferences prefs;
 
     public static void load() {
+
+        logoTexture = new Texture(Gdx.files.internal("data/logo.png"));
+        logoTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        logo = new TextureRegion(logoTexture, 0, 0, 512, 114);
+
 
         texture = new Texture(Gdx.files.internal("data/texture.png"));
         texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
