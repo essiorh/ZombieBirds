@@ -17,6 +17,8 @@ public class Pipe extends Scrollable {
 
     private Rectangle skullUp, skullDown, barUp, barDown;
 
+    private  boolean isScored;
+
     // Когда констуктор Pipe вызван – вызовите конструтор родителя (Scrollable)
     public Pipe(float x, float y, int width, int height, float scrollSpeed, float groundY) {
         super(x, y, width, height, scrollSpeed);
@@ -36,6 +38,7 @@ public class Pipe extends Scrollable {
         super.reset(newX);
         // Измените высоту на случайное значение
         height = r.nextInt(90) + 15;
+        isScored = false;
     }
 
     @Override
@@ -87,5 +90,13 @@ public class Pipe extends Scrollable {
                     .overlaps(bird.getBoundingCircle(), skullDown));
         }
         return false;
+    }
+
+    public boolean isScored() {
+        return isScored;
+    }
+
+    public void setScored(boolean scored) {
+        isScored = scored;
     }
 }

@@ -3,11 +3,14 @@ package com.kilobolt.zombiebird.zbhelpers;
 import com.kilobolt.zombiebird.gameobjects.Bird;
 import com.kilobolt.zombiebird.gameobjects.Grass;
 import com.kilobolt.zombiebird.gameobjects.Pipe;
+import com.kilobolt.zombiebird.gameworld.GameWorld;
 
 public class ScrollHandler {
 
+    private GameWorld gameWorld;
     // ScrollHandler создаст все необходимые нам объекты
-    private Grass frontGrass, backGrass;
+    private Grass frontGrass;
+    private Grass backGrass;
     private Pipe pipe1, pipe2, pipe3;
 
     // ScrollHandler будет использовать следующие константы
@@ -20,7 +23,8 @@ public class ScrollHandler {
 
     // конструктор получает значение по Y оси, где нам необходимо создать наши
     // Grass и Pipe объекты.
-    public ScrollHandler(float yPos) {
+    public ScrollHandler(GameWorld gameWorld, float yPos) {
+        this.gameWorld = gameWorld;
         frontGrass = new Grass(0, yPos, 143, 11, SCROLL_SPEED);
         backGrass = new Grass(frontGrass.getTailX(), yPos, 143, 11, SCROLL_SPEED);
 
@@ -67,7 +71,33 @@ public class ScrollHandler {
 
     // вернуть True если какая-нибудь из труб коснулась птицы
     public boolean collides(Bird bird) {
+        if (!pipe1.isScored()
+                && pipe1.getX() + (pipe1.getWidth() / 2) < bird.getX()
+                + bird.getWidth()) {
+            addScore(1);
+            pipe1.setScored(true);
+            AssetLoader.coin.play();
+        } else if (!pipe2.isScored()
+                && pipe2.getX() + (pipe2.getWidth() / 2) < bird.getX()
+                + bird.getWidth()) {
+            addScore(1);
+            pipe2.setScored(true);
+            AssetLoader.coin.play();
+
+        } else if (!pipe3.isScored()
+                && pipe3.getX() + (pipe3.getWidth() / 2) < bird.getX()
+                + bird.getWidth()) {
+            addScore(1);
+            pipe3.setScored(true);
+            AssetLoader.coin.play();
+
+        }
+
         return (pipe1.collides(bird) || pipe2.collides(bird) || pipe3.collides(bird));
+    }
+
+    private void addScore(int increment) {
+        gameWorld.addScore(increment);
     }
 
     // методы доступа к переменным класса
